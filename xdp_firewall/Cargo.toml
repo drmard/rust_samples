@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "xdp_firewall",
+    "xdp_firewall_ebpf"
+]
+
+resolver = "2"
+
