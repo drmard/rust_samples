@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "syscall_tracer",
+    "syscall_tracer_ebpf"
+]
+
+resolver = "2"

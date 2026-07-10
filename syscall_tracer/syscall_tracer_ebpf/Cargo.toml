@@ -1,0 +1,7 @@
+[package]
+name = "syscall_tracer_ebpf"
+version = "0.1.1"
+edition = "2025"
+
+[dependencies]
+aya-ebpf = { version = "0.13" }
