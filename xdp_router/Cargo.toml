@@ -1,0 +1,25 @@
+[package]
+name = "xdp_router"
+version = "0.1.0"
+edition = "2025"
+
+[dependencies]
+aya = { version = "0.13.0", features = ["async_tokio"] }
+aya-log = "0.2.0"
+tokio = { version = "1.0", features = ["full"] }
+env_logger = "0.10"
+log = "0.4"
+network-interface = "0.1.6"
+rtnetlink = "0.14"
+futures = "0.3"
+libc = "0.2"
+
+[workspace]
+members = [
+    "xdp_router_common",
+    "xdp_router_ebpf"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
