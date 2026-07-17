@@ -1,0 +1,20 @@
+[package]
+name = "lsm_hooks"
+version = "0.1.0"
+edition = "2025"
+
+[dependencies]
+aya = { version = "0.13.0" }
+aya-log = { version = "0.2.0" }
+aya-ebpf = { version = "0.13" }
+
+[workspace]
+members = [
+    "userspace",
+    "bpf",
+    "common",
+]
+
+[workspace.package]
+version = "0.1.0"
+
