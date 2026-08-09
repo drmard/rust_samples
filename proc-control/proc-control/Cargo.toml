@@ -1,0 +1,11 @@
+[package]
+name = "proc-control"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aya = { version = "0.13" }
+aya-log = { version = "0.2.0" }
+tokio = { version = "1.32", features = ["full"] }
+log = "0.4"
+

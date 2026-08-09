@@ -1,0 +1,9 @@
+[package]
+name = "proc-control"
+version = "0.1.0"
+authors = ["Dr.Mard <sergej.khrumalo@gmail.com>"]
+description = "Straightforward process control service. (POC)"
+license = ""
+edition = "2021"
+
+[dependencies]
