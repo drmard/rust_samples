@@ -1,0 +1,10 @@
+[package]
+name = "anti_ddos"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.38", features = ["full"] }
+bytes = "1.6"
+dashmap = "5.5"
+std_semaphore = "0.1"
