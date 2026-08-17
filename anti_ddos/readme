@@ -1,0 +1,9 @@
+* * * * *
+
+The code presented here serves as an excellent application-layer (L7) intelligent proxy filter. However, user-space code is powerless to provide complete protection against attacks of "all types" (including UDP/ICMP amplification or raw SYN floods at terabit speeds), as the OS kernel still consumes resources processing network interrupts.
+
+
+How such a system is scaled for enterprise-grade protection:
+
+  01. XDP / eBPF (L3/L4 layer): Writing compact programs in C or Rust (using the *aya* framework) that are loaded directly into the network interface card (Linux kernel). These filter SYN floods and UDP amplification attacks before the packets reach the OS network stack.
+  02. SYN Cookies: Enabling SYN cookies at the Linux kernel level to protect against spoofed IP addresses without allocating memory for connection state.
