@@ -1,0 +1,25 @@
+* * * * *
+
+  Solution Architecture
+
+01. Capture Stream (Blocking Thread): By design, pcap blocks the thread while waiting for packets. We will offload this to a dedicated native thread.
+02. Asynchronous Channel (tokio::sync::mpsc): The capture thread will capture raw packet bytes (Vec<u8>) and immediately send them via a thread-safe multi-producer, single-consumer (MPSC) channel. This ensures the network buffer does not overflow and packets are not dropped.
+03. Asynchronous Handler (Tokio Task): The main asynchronous loop will read packets from the channel, parse them (Ethernet/IP/UDP/DNS), and output telemetry without blocking traffic capture.
+
+
+  To integrate with ClickHouse, you can use the modern asynchronous `clickhouse` driver. To ensure maximum write efficiency, we will not send each DNS packet individually. Instead, we will implement batch insertion: data will accumulate in memory and be sent to ClickHouse in groups (e.g., every 1,000 packets or every 3 seconds).
+
+  ClickHouse Setup (DDL)
+Create the table in ClickHouse before starting the service. You can use the `MergeTree` engine with daily partitioning for fast analytics:
+
+CREATE TABLE IF NOT EXISTS dns_telemetry (
+    timestamp DateTime64(3) DEFAULT now64(),
+    tx_id UInt16,
+    msg_type Enum8('Query' = 1, 'Response' = 2),
+    query_type String,
+    domain String,
+    answers Array(String)
+) ENGINE = MergeTree()
+PARTITION BY toYYYYMMDD(timestamp)
+ORDER BY (msg_type, domain, timestamp);
+
