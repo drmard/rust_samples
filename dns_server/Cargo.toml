@@ -1,0 +1,17 @@
+[package]
+name = "sqlite-dns-forwarder"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.38", features = ["full"] }
+hickory-server = "0.24"
+hickory-resolver = "0.24"
+hickory-proto = "0.24"
+rusqlite = { version = "0.31", features = ["bundled"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+chrono = "0.4"
+# added for REST API
+axum = "0.7"
+serde = { version = "1.0", features = ["derive"] }
