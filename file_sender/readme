@@ -1,0 +1,42 @@
+* * * *
+
+  Level of detail
+
+1. Asynchronous execution
+The `#[tokio::main]` macro transforms the standard synchronous `main` function into an asynchronous entry point.
+
+2. Argument handling
+Using `std::env::args().collect()`. The program expects:
+`args[1]`: IP address and port (e.g. 127.0.0.1:8080).
+`args[2]`: File path.
+`args[3]`: Execution mode (`client` or `server`).
+
+3. Asynchronous network operations
+Server (TcpListener): The `TcpListener::bind(addr).await?` method starts listening on a port. The `.accept().await?` method pauses function execution (without blocking the OS thread) until a client connects. It returns a `TcpStream` socket and the client's address.
+Client (TcpStream): The `TcpStream::connect(addr).await?` method initiates an asynchronous TCP three-way handshake with the server.
+
+4. Asynchronous file operations – we use `tokio::fs::File`. These implement the `AsyncRead` and `AsyncWrite` traits.
+
+5. Copying and buffering (tokio::io::copy)
+The most important part is the `tokio::io::copy(&mut reader, &mut writer).await?` function.
+It automatically allocates an internal buffer (typically 8 KB).
+It asynchronously reads data from the source and writes it to the destination in a loop.
+It works in both directions.
+
+6. Graceful connection termination (flush and shutdown).
+
+
+
+
+
+
+  How to run and test
+
+Open a terminal and start the server (it will wait for a file and save it as `received.txt`):
+
+  $ cargo run -- 127.0.0.1:8085 received.txt server
+
+Open a second terminal, create a test file, and launch the client to send it:
+
+  $ echo "hello from the asynchronous Rust environment..." > sample.txt
+  $ cargo run -- 127.0.0.1:8085 sample.txt client
