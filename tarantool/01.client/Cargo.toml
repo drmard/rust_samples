@@ -1,0 +1,10 @@
+[package]
+name = "tarantool_client"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+# you can use official tarantool client driver or another one
+tarantool = { version = "0.7", features = ["net_box"] } 
+serde = { version = "1.0", features = ["derive"] }

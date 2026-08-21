@@ -1,0 +1,6 @@
+[lib]
+crate-type = ["cdylib"] # compiling into a dynamic library (.so / .dylib)
+
+[dependencies]
+tarantool = "0.11" # specialized crate for in-process modules
+serde = { version = "1.0", features = ["derive"] }

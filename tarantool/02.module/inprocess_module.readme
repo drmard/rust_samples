@@ -1,0 +1,14 @@
+
+  How to run and test in Tarantool (Lua)
+
+01. Compile module: `cargo build --release`
+
+02. Copy the resulting `.so` lib file to the Tarantool module search directory.
+
+03. Call from Lua:
+
+  -- load a function from a binary module
+  box.schema.func.create('my_tarantool_lib.add_some_action', {language = 'C'})
+
+  -- function call
+  local res = box.func['my_tarantool_lib.add_some_action']:call({101, 50})

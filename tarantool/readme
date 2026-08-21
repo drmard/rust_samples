@@ -1,0 +1,16 @@
+* * * *
+
+
+  You can implement on rust advanced high-load solutions using Tarantool. Rust delivers maximum performance and memory safety, while Tarantool operates as an ultra-fast in-memory database (In-Memory DB) and an application server.
+
+
+  There are two main approaches to integrating Rust and Tarantool.
+
+  01.Rust as an external client (Recommended for microservices):
+The Rust application runs as a separate network service and communicates with Tarantool via the binary iproto protocol using asynchronous drivers.
+  02.Rust as a stored module (A replacement for Lua scripts):
+Rust code is compiled into a dynamic library (.so), loaded directly into the Tarantool process, and called from Lua. This eliminates network latency.
+
+  Both architectural options are briefly discussed below : 
+Option 1: Rust as an external client (Tokio + tarantool-module) (folder '01.client')
+Option 2: Rust as in-process module within Tarantool (Maximum Highload) (folder '02.module')
