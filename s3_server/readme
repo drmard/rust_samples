@@ -1,0 +1,21 @@
+* * * *
+
+
+How to test this ?
+
+Start the server using the `cargo run` command. To verify it, you can use the standard `aws-cli` utility (or the MinIO client) by redirecting requests to the local port using the `--endpoint-url` flag
+
+01.Creating a bucket:
+
+  aws --endpoint-url http://localhost:8014 s3 mb s3://mybucket 
+
+02.Uploading test file:
+
+  echo "hello from rust S3 !" > test.txt
+  aws --endpoint-url http://localhost:8014 s3 cp test.txt s3://mybucket/test.txt
+
+03.Downloading the file back:
+
+  aws --endpoint-url http://localhost:8014 s3 cp s3://mybucket/test.txt downloaded.txt
+  cat downloaded.txt
+
