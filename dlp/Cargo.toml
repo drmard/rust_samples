@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "dlp_sniffer",
+    "dlp_analyzer",
+]
