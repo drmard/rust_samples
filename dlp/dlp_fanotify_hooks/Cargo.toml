@@ -1,0 +1,10 @@
+[package]
+name = "dlp_fanotify_hooks"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fanotify-rs = "0.3"
+libc = "0.2"
+nix = { version = "0.29", features = ["fs"] }
+

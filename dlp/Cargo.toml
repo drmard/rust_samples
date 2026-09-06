@@ -3,4 +3,5 @@
 members = [
     "dlp_sniffer",
     "dlp_analyzer",
+    "dlp_fanotify_hooks",
 ]
