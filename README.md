@@ -14,25 +14,26 @@ Some rust code samples demonstrating its memory management features and asynchro
 
   5.The 'siem_clickhouse_processor' directory contains a Rust implementation of a reliable asynchronous SIEM event processing service using Tokio, MPSC channels for backpressure, ClickHouse integration for batch insertion with Local WAL(Write-Ahead Log) that ensures reliable data delivery in rust client applications and protects against data loss during network outages or ClickHouse failures.
 
-  How to test this.
-    1.Start the local web application (or any service) you want to expose. Let's assume it runs on port 3000. You can run the command `python -m http.server 3000`.
-    2.Start our server (simulating operation on a VPS):
+  6.The 'rs_ngrok' directory contains a rust implementation of straightforward ngrok service(PoC).
+
+  How to test it.
+
+    1. Start the local web application (or any service) you want to expose. Let's assume it runs on port 3000. You can run the command `python -m http.server 3000`.
+    2. Start our server (simulating operation on a VPS):
 
       cargo run -- server 8001 8080
 
     Port 8001 is used for tunnel coordination, while external users will connect to port 8080.
-    3.Start our client:
+    3. Start our client:
 
       cargo run -- client 127.0.0.1:8001 127.0.0.1:3000
 
-    4.Verification:
+    4. Verification:
     Open your browser and go to http://127.0.0.1:8080. You will see the content served by your application from port 3000.
 
     What is needed for a full-fledged ngrok?
+
     The code above is a basic demonstration (MVP). To turn it into a full-fledged product, you would need to implement:
       Multiplexing: Using libraries like yamux to handle hundreds of sessions within a single TCP connection, rather than opening new TCP ports for every single request.
       Authorization: Passing security tokens from the client to the server during the connection process.
       Dynamic subdomains: Integrating with an HTTP parser on the server to identify which subdomain (e.g., subdomain.yourdomain.com) the request is targeting and route   it to the specific client.
-
-
-
