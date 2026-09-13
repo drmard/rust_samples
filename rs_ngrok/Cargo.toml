@@ -1,0 +1,10 @@
+[package]
+name = "rs_ngrok"
+version = "0.1.0"
+authors = ["Dr.Mard <sergej.khrumalo@gmail.com>"]
+description = "Straightforward rust ngrok service. (POC)"
+license = ""
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
