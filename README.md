@@ -12,4 +12,6 @@ Some rust code samples demonstrating its memory management features and asynchro
     - Asynchronous Channel (tokio::sync::mpsc): The capture thread will capture raw packet bytes (Vec<u8>) and immediately send them via a thread-safe multi-producer, single-consumer (MPSC) channel. This ensures the network buffer does not overflow and packets are not dropped.
     - Asynchronous Handler (Tokio Task): The main asynchronous loop will read packets from the channel, parse them (Ethernet/IP/UDP/DNS), and output telemetry without blocking traffic capture.
 
+  5.The 'siem_clickhouse_processor' directory contains an implementation of a reliable asynchronous SIEM event processing service using Tokio, MPSC channels, ClickHouse for batch insertion with Local WAL(Write-Ahead Log) that ensures reliable data delivery and protects against data loss during network outages or ClickHouse failures.
 
+protection against data loss during network or ClickHouse failures
