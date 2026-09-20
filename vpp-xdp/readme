@@ -1,0 +1,40 @@
+* * * * *
+  
+  Proper Integration of eBPF, AF_XDP, and FD.io VPP (Vector Packet Processor)
+
+01.Kernel (eBPF/XDP):
+The program intercepts traffic on the network interface and redirects packets to a special map of type BPF_MAP_TYPE_XSKMAP based on the network queue index (queue_id).
+
+02.Userspace Service (VPP):
+VPP itself includes a built-in, native, high-performance af_xdp driver.
+There is no need to write a custom UMEM ring handler in Rust.
+VPP manages the AF_XDP socket, allocates memory (VPP packet buffers), and retrieves frames directly using either the zero-copy or copy-mode mechanism.
+
+03.Control application (Rust Control Plane):
+Your Rust program is responsible for initialization, creating the XSKMAP, loading the eBPF code into the kernel, and pinning (persisting) the map to the BPF filesystem (/sys/fs/bpf/), from which VPP can read it.
+
+
+
+  Integration and launch in a VPP
+
+Invoke the configuration commands via vppctl:
+
+1. Switch the physical interface to promiscuous mode and bring it up
+    # ip link set dev eth1 promisc on up
+
+2. We create an interface within VPP by specifying the path to the eBPF map created by the Rust application
+    # vppctl create interface af_xdp host-if eth1 num-rx-queues all prog /sys/fs/bpf/vpp_xdp/xsks_map
+
+3. Assign an IP address within VPP and enable the interface
+    # vppctl set interface ip address eth1/0 10.0.0.1/24
+    # vppctl set interface state eth1/0 up
+
+
+Important implementation nuances .
+
+  Zero-copy mode:
+For VPP to operate in zero-copy mode, the network card must support header/data splitting, and the Linux driver must support AF_XDP sockets. If this is not supported, VPP will automatically fall back to copy mode.
+
+  Access rights:
+Launching the Rust application (Control Plane) and VPP itself requires CAP_NET_ADMIN and CAP_BPF privileges (or running as the root user).
+

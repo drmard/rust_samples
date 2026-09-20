@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "vpp-xdp-loader",
+    "eth-xdp-kernel"
+]
+
+resolver = "2"
+
