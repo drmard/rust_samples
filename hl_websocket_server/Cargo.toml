@@ -1,0 +1,18 @@
+[package]
+name = "hl_websocket_server"
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+# Tokio environment with a custom runtime configurator
+tokio = { version = "1.38", features = ["macros", "rt-multi-thread", "net", "sync", "time"] }
+tokio-tungstenite = "0.23"
+futures-util = { version = "0.3", default-features = false, features = ["sink", "std"] }
+serde = { version = "1.0", features = ["derive"] }
+postcard = { version = "1.0", features = ["alloc"] }
+dashmap = "6.0"
+
+# redis driver and high-performance asynchronous connection pool
+redis = { version = "0.25", features = ["tokio-comp", "connection-manager"] }
+bb8 = "0.8"
+bb8-redis = "0.15"

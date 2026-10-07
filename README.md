@@ -37,3 +37,11 @@ Some rust code samples demonstrating its memory management features and asynchro
       Multiplexing: Using libraries like yamux to handle hundreds of sessions within a single TCP connection, rather than opening new TCP ports for every single request.
       Authorization: Passing security tokens from the client to the server during the connection process.
       Dynamic subdomains: Integrating with an HTTP parser on the server to identify which subdomain (e.g., subdomain.yourdomain.com) the request is targeting and route   it to the specific client.
+
+  7.The 'hl_websocket_server' catalog presents an efficient implementation of a high-load WebSocket server. It includes:
+
+      1. Heartbeat (Network Ping/Pong): Monitoring of "dead" half-open TCP connections using built-in WebSocket frames with a timeout.
+      2. Tuning the Tokio Thread Pool: Configuring the Tokio scheduler directly in the code to maximize task distribution and minimize context switching.
+      3. Horizontal scaling (Pub/Sub): Redis integration via the asynchronous `redis` driver using the `bb8-redis` connection pool. All server replicas exchange broadcast messages via a unified bus.
+
+
